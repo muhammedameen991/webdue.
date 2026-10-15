@@ -1,0 +1,1 @@
+export function createPeerConnection(rtcConfig={iceServers:[{urls:'stun:stun.l.google.com:19302'}]}){return new RTCPeerConnection(rtcConfig)}export async function requestMedia(mode='video'){return navigator.mediaDevices.getUserMedia({audio:true,video:mode!=='text'})}export function stopMedia(stream){stream?.getTracks().forEach(track=>track.stop())}
