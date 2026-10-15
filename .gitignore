@@ -1,0 +1,12 @@
+# Local Firebase configuration
+config.js
+# Dependencies and build output
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
