@@ -1,0 +1,2 @@
+// Do not use a public client-only queue for real stranger matchmaking.
+export function matchmakingStatus(){return {ready:false,message:'A trusted server-side coordinator is required to pair users safely.'}}
