@@ -1,0 +1,2 @@
+// Firebase signaling adapter is intentionally opt-in; requires config.js and Firebase setup.
+export function explainSignalingUnavailable(){return 'Signaling is not configured. Add config.js and a trusted matchmaking coordinator before testing with another user.'}
