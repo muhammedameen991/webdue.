@@ -1,1 +1,36 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chat — Webdue</title><link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/chat.css"></head><body><header class="topbar wrap"><a class="brand" href="index.html"><span class="brand-mark">w</span>webdue<span class="brand-dot">.</span></a><a href="index.html">← Home</a></header><main class="chat-layout"><section class="panel"><h1>Meet someone new.</h1><div class="video-box"><p id="video-placeholder">Your local video appears after you start</p><video id="local-video" class="local" autoplay muted playsinline></video></div><p class="status" id="status">Not connected. This starter does not yet match you with strangers.</p><p class="notice">Never share private information. Use video only when comfortable.</p><div class="controls"><button id="start-media">Start camera / mic</button><button id="mute">Toggle mic</button><button id="camera">Toggle camera</button><button id="next">Next</button><button id="end" class="danger">End</button><button id="report">Report</button></div></section><section class="panel"><h2>Text chat</h2><div class="chat-messages" id="messages" aria-live="polite"><p class="status">Local demo: messages are visible only in this browser.</p></div><form id="message-form" class="send-row"><input id="message-input" maxlength="500" placeholder="Write a message…" aria-label="Message"><button type="submit">Send</button></form><p class="status">Remote chat and stranger matchmaking require Firebase configuration and a trusted coordinator.</p></section></main><script type="module" src="js/chat.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090d1b"><title>Webdue Rooms</title>
+<link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/chat.css">
+<script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
+</head>
+<body>
+<header class="topbar wrap"><a class="brand" href="index.html"><span class="brand-mark">w</span>webdue<span class="brand-dot">.</span></a><a href="index.html">← Home</a></header>
+<main class="chat-layout">
+<section class="panel">
+<h1>Private video room</h1>
+<p class="status" id="status" role="status">Create a room or join with a room code.</p>
+<div class="room-actions">
+<button id="create-room">Create room</button>
+<div class="join-row"><input id="room-code" autocomplete="off" placeholder="Paste host room code" aria-label="Room code"><button id="join-room">Join room</button></div>
+</div>
+<div class="share-box" id="share-box" hidden><label for="share-link">Share this invite link with one person</label><div class="join-row"><input id="share-link" readonly><button id="copy-link">Copy link</button></div><small>Keep this link private. Anyone who has it may try to connect.</small></div>
+<div class="video-grid">
+<div class="video-box"><video id="remote-video" autoplay playsinline></video><div class="placeholder" id="remote-placeholder"><strong>Waiting for the other person</strong><p>They must open your invite link.</p></div><span class="video-label">Other person</span></div>
+<div class="video-box local-box"><video id="local-video" autoplay muted playsinline></video><div class="placeholder" id="local-placeholder"><strong>Your camera</strong><p>Start video when you're ready.</p></div><span class="video-label">You</span></div>
+</div>
+<div class="controls"><button id="start-media">Start video & mic</button><button id="mute" disabled>Mute mic</button><button id="camera" disabled>Turn camera off</button><button id="end" class="danger">End call</button></div>
+<p class="notice">Use only with people you trust. Camera/microphone access is requested after you press Start. This is an invite-room prototype, not random stranger matching.</p>
+</section>
+<section class="panel">
+<h2>Live text chat</h2><p class="status" id="chat-status">Connect to a room to enable remote chat.</p>
+<div class="chat-messages" id="messages" aria-live="polite"><p class="status">Messages appear here after the peer connection opens.</p></div>
+<form id="message-form" class="send-row"><input id="message-input" maxlength="500" placeholder="Write a message…" aria-label="Message"><button type="submit">Send</button></form>
+<div class="controls"><button id="report">Report / disconnect</button></div>
+<p class="status">Text and media are peer-to-peer when connected. Signaling uses PeerJS's hosted service. A TURN relay may be needed on some networks.</p>
+</section>
+</main>
+<script src="js/chat.js"></script>
+</body></html>
