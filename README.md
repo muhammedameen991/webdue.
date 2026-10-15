@@ -1,53 +1,46 @@
-# Webdue — Meet someone new. Instantly.
+# Webdue
 
-Webdue is a lightweight HTML/CSS/vanilla-JavaScript prototype for a random video and text chat experience. It is designed to be easy to host as a static site and friendly to low-spec devices.
+Webdue is a lightweight static website prototype for invite-link video, audio and text conversations. It uses HTML, CSS, vanilla JavaScript, WebRTC via PeerJS, and PeerJS's hosted signaling service. You do not need to run or maintain your own backend server for the basic invite-room flow.
 
-## Files included
+## Included
 
-- `index.html` — landing page
-- `chat.html` — local camera preview and text-chat demo
-- `about.html`, `privacy.html`, `community.html` — information and safety pages
-- `css/style.css`, `css/chat.css` — responsive dark UI styles
-- `js/app.js` — landing-page interactions
-- `js/chat.js` — local chat demo and media controls
-- `js/webrtc.js` — WebRTC/media helper functions
-- `js/signaling.js` — signaling integration placeholder
-- `js/matchmaking.js` — matchmaking safety/status placeholder
-- `js/safety.js` — safe text handling and local-only report note
-- `config.example.js` — example Firebase web configuration shape
-- `database.rules.json` — locked-down starter database rules
+- Responsive landing page
+- Create a private room and copy an invite link
+- Join a room using the host's room ID or invite link
+- Browser camera/microphone preview and mute/camera controls
+- Peer-to-peer video/audio call and text messages when the browsers connect
+- End/disconnect controls and basic safety notice
+- About, privacy and community-guideline pages
 
 ## Run locally
 
-Camera and microphone access generally requires HTTPS or `localhost`; do not open the HTML file directly as `file://`.
-
-With Python installed, run this in the project folder:
+Camera/microphone access requires HTTPS or localhost. In the project folder, run:
 
 ```bash
-python -m http.server 8000
+py -m http.server 8000
 ```
 
-Then open http://localhost:8000. On Windows, `py -m http.server 8000` also works.
+Then open http://localhost:8000. Deploy the static files to GitHub Pages or another HTTPS static host for remote testing.
 
-## Current status — important
+## How connection works
 
-This repository is a **frontend prototype, not a working random stranger matching service**.
+1. The host selects **Create room**. PeerJS obtains a peer ID from its hosted signaling service.
+2. The host shares the generated invite link privately.
+3. The guest opens the link, grants media permission, and calls the host.
+4. WebRTC carries media and chat directly between the two browsers where network conditions allow.
 
-- The camera preview is local to your browser.
-- Text messages are local to the current page and are not sent to another person.
-- Next does not find another user.
-- The Report button stores a note only in the current browser session; it does not contact moderators.
-- The Firebase example and signaling/matchmaking files are starter scaffolding and are not wired into a complete production matching flow.
+## Limitations — read before sharing publicly
 
-## What real matching still needs
+- This is **invite-link peer-to-peer calling, not random stranger matchmaking**. There is no shared queue to pair arbitrary visitors.
+- There is no self-hosted backend, but the project depends on the third-party PeerJS hosted signaling service and CDN. Service availability, rate limits and policies are outside this repository's control.
+- STUN-only paths may fail on some networks. Reliable connectivity may require a TURN relay, which is an external service and may cost money.
+- A report button disconnects the call; it does not send a report to a moderation team.
+- Do not share room links publicly; anyone with a link may attempt to join. Do not share personal information.
+- Before a public service, implement abuse reporting/moderation, rate limiting, privacy disclosures, age-appropriate safeguards and test security on multiple networks/devices.
 
-To connect two different users, implement and test a trusted signaling/matchmaking service, authenticated room membership, atomic queue pairing, expiring stale records, secure database rules, and cleanup when a user leaves. WebRTC needs ICE configuration; STUN alone will not connect every network, so a reliable TURN service may be needed. Never expose Firebase Admin credentials or service-account keys in browser code. Do not make database rules public just to make matching work.
+## Deployment
 
-Before public launch, add a real moderation/report-delivery process, rate limiting, abuse prevention, appropriate age safeguards, privacy/retention disclosures, and tests for disconnects and unauthorized access. Never promise that conversations cannot be recorded by another participant.
-
-## Deploy
-
-The static pages can be deployed on GitHub Pages or Vercel. Enable HTTPS for deployed camera access. Static hosting by itself does not provide live matchmaking or relay media.
+Publish the repository's static files on GitHub Pages and enable HTTPS. Open `chat.html` from the deployed site; camera permission will not work on an ordinary insecure HTTP origin except localhost.
 
 ## Project structure
 
