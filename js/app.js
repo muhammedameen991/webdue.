@@ -1,0 +1,1 @@
+const startLinks=document.querySelectorAll('a[href^="chat.html"]');startLinks.forEach(a=>a.addEventListener('click',()=>{try{sessionStorage.setItem('webdue-mode',new URL(a.href).searchParams.get('mode')||'video')}catch{}}));
